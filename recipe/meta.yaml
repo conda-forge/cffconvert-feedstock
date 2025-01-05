@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: b4379ee415c6637dc9e3e7ba196605cb3cedcea24613e4ea242c607d9e98eb50
 
 build:
@@ -14,17 +14,17 @@ build:
     - cffconvert = cffconvert.cli.cli:cli
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
     - pip
-    - python >=3.6
+    - python {{ python_min }}
   run:
     - click >=7.0,<9
     - jsonschema >=3.0,<4
     - pykwalify >=1.6
-    - python >=3.6
+    - python >={{ python_min }}
     - requests >=2.20,<3
     - ruamel.yaml >=0.16.0
 
@@ -36,6 +36,7 @@ test:
     - cffconvert --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/citation-file-format/cff-converter-python
